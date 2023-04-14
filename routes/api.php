@@ -46,8 +46,11 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
     //fetch user followers
     Route::get('/followers',[FriendshipController::class, 'fetchUserFollowers']);
     
-     //create post
+    //create post
     Route::post('post',[PostController::class,'create']); 
+
+    //upload post pic
+    Route::post('post/pic',[PostController::class,'uploadPic']); 
     
     //update post
     Route::patch('post',[PostController::class,'update']); 

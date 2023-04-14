@@ -105,4 +105,27 @@ class UserController extends Controller
         
         return Response(['data' => 'User Logout successfully.'],200);
     }
+
+    /**
+     * Upload user avatar
+     */
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:1048',
+            'userId' => 'required|integer',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $request->image->move(public_path('images/avatar'),$imageName);
+
+        $user = User::find($request->userId);
+
+        $user->avatar = $imageName;
+
+        $user->save();
+
+        return Response(["message" => 'Image uploaded successfully']);
+    }
 }

@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CommentLike extends Model
 {
     use HasFactory;
-
+ 
     protected $fillable = ["comment_id", "user_id"];
 }

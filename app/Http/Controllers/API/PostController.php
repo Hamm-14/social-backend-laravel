@@ -130,4 +130,27 @@ class PostController extends Controller
         
         return Response(["message" => "Post liked successfully"]);
     }
+
+      /**
+     * Upload post_pic
+     */
+    public function uploadPic(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:1048',
+            'postId' => 'required|integer',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $request->image->move(public_path('images/post'),$imageName);
+
+        $post = Post::find($request->postId);
+
+        $post->post_pic = $imageName;
+
+        $post->save();
+
+        return Response(["message" => 'Image uploaded successfully']);
+    }
 }

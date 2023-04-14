@@ -11,8 +11,34 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+     /**
+     * Register a new user
+     */
+    public function registerUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $isUserExist = User::where('email',$request->email)->first();
+
+        if($isUserExist){
+            return ["message" => "User Already Exist"];
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
+
+        return $user;
+    }
+
     /**
-     * Display a listing of the resource.
+     * create user session
      */
     public function loginUser(Request $request): Response
     {
@@ -41,7 +67,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Get User Details
      */
     public function userDetails()
     {
@@ -53,8 +79,21 @@ class UserController extends Controller
         }
     }
 
+     /**
+     * Fetch all users
+     */
+    public function fetchAllUsers()
+    {
+        if (Auth::check()) {
+
+            $users = User::all();
+
+            return Response(['data' => $users],200);
+        }
+    }
+
     /**
-     * Display the specified resource.
+     * Destroy user session
      */
     public function logout()
     {

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\FriendshipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,14 @@ use App\Http\Controllers\API\UserController;
 // });
 
 Route::post('login',[UserController::class,'loginUser']);
+Route::post('register',[UserController::class,'registerUser']);
 
 
 Route::group(['middleware' => 'auth:sanctum'],function(){
     Route::get('user',[UserController::class,'userDetails']);
+    Route::get('users',[UserController::class,'fetchAllUsers']);
+    Route::post('follow', [FriendshipController::class, 'followUser']);
+    Route::get('/following',[FriendshipController::class, 'fetchUserFollowing']);
+    Route::get('/followers',[FriendshipController::class, 'fetchUserFollowers']);
     Route::get('logout',[UserController::class,'logout']);
 });

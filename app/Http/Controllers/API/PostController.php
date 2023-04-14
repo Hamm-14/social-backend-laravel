@@ -7,9 +7,6 @@ use App\Models\Post;
 use App\Models\PostLike;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -67,6 +64,10 @@ class PostController extends Controller
         ]);
 
         $post = Post::find($request->postId);
+
+        if(!$post) {
+            return Response(["message" => "Post not found"],404);
+        }
  
         $post->description = $request->description;
          
@@ -82,6 +83,12 @@ class PostController extends Controller
         ]);
 
         $post = Post::find($request->postId);
+
+        if(!$post) {
+            return Response(["message" => "Post not found"],404);
+        }
+
+        PostLike::where('post_id', $request->postId)->delete();
         
         $post->delete();
 
@@ -101,8 +108,10 @@ class PostController extends Controller
             return Response(["message" => "Post not found"],404);
         }
 
-        if($post->user->id != $request->userId) {
-            return Response(["message" => "Post not found belonging to a user"],404);
+        $user = User::find($request->userId);
+
+        if(!$user) {
+            return Response(["message" => "User not found"],404);
         }
 
         $postLike = PostLike::where(['post_id' => $request->postId, 'user_id' => $request->userId])->first();

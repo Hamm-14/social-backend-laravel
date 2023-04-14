@@ -20,6 +20,6 @@ class Comment extends Model
 
     public function CommentLikes(): HasMany
     {
-        return $this->hasMany(CommentLikes::class);
+        return $this->hasMany(CommentLike::class);
     }
 }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Mail\DemoMail;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -33,6 +35,13 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+
+        $mailData = [
+            'title' => 'Mail from Codeial',
+            'body' => "Your account has been created successfully on codeial. Enjoy exploring social media powered by Codeial",
+        ];
+
+        Mail::to($request->email)->send(new DemoMail($mailData));
 
         return $user;
     }

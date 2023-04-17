@@ -31,6 +31,9 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
     //fetch user details
     Route::get('user',[UserController::class,'userDetails']);
 
+    //update user details
+    Route::patch('user',[UserController::class,'update']);
+
     //upload user avatar
     Route::post('user/avatar', [UserController::class,'uploadAvatar']);
 
@@ -39,6 +42,9 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
 
     //follow a user
     Route::post('follow', [FriendshipController::class, 'followUser']);
+
+     //follow a user
+     Route::get('unfollow', [FriendshipController::class, 'unfollowUser']);
 
     //fetch user followings
     Route::get('/following',[FriendshipController::class, 'fetchUserFollowing']);

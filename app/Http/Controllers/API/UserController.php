@@ -137,4 +137,35 @@ class UserController extends Controller
 
         return Response(["message" => 'Image uploaded successfully']);
     }
+
+     /**
+     * Update user data
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+            'userId' => 'required|int',
+            'name' => 'string|max:255',
+            'email' => 'string|email',
+            'password' => 'string|max:255',
+        ]);
+
+        $user = User::find($request->userId);
+
+        if($request->name) {
+            $user->name = $request->name;
+        }
+
+        if($request->email) {
+            $user->email = $request->email;
+        }
+
+        if($request->password) {
+            $user->password = $request->password;
+        }
+
+        $user->save();
+
+        return Response(["message" => 'User updated successfully',$user]);
+    }
 }

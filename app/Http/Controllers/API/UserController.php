@@ -69,7 +69,7 @@ class UserController extends Controller
     
             $success =  $user->createToken('MySocialApp')->plainTextToken; 
         
-            return Response(['token' => $success],200);
+            return Response(['token' => $success, 'user' => $user],200);
         }
 
         return Response(['message' => 'email or password wrong'],401);

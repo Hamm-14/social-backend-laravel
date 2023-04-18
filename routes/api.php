@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
     Route::delete('post',[PostController::class,'delete']);  
     
     //toggle like on post
-    Route::get('post/like/toggle',[PostController::class,'toggleLike']);
+    Route::post('post/like/toggle',[PostController::class,'toggleLike']);
     
     //fetch all posts
     Route::get('/post/all',[PostController::class, 'allPosts']);       
@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
     Route::delete('/comment',[CommentController::class, 'delete']);
 
     //toggle comment likes
-    Route::get('/comment/like/toggle',[CommentController::class, 'toggleLike']);
+    Route::post('/comment/like/toggle',[CommentController::class, 'toggleLike']);
 
     //logout
     Route::get('logout',[UserController::class,'logout']);

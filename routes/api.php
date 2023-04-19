@@ -66,6 +66,9 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
     
     //toggle like on post
     Route::post('post/like/toggle',[PostController::class,'toggleLike']);
+
+    //fetch post details
+    Route::post('/post/get',[PostController::class, 'getPost']);       
     
     //fetch all posts
     Route::get('/post/all',[PostController::class, 'allPosts']);       

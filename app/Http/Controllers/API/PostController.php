@@ -44,6 +44,20 @@ class PostController extends Controller
     } 
 
      /**
+     * get specific post details
+     */
+    public function getPost(Request $request)
+    {
+        $request->validate([
+            'postId' => 'required|integer'
+        ]);
+
+        $post = Post::find($request->postId);
+
+        return $post;
+    } 
+
+     /**
      * fetch user posts
      */
     public function userPosts(Request $request)
@@ -138,7 +152,7 @@ class PostController extends Controller
     public function uploadPic(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:1048',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg,jfif|max:3048',
             'postId' => 'required|integer',
         ]);
 

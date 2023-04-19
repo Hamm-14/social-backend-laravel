@@ -135,7 +135,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return Response(["message" => 'Image uploaded successfully']);
+        return Response(["message" => 'Image uploaded successfully', "user" => $user]);
     }
 
      /**

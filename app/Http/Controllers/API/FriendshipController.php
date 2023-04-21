@@ -49,11 +49,7 @@ class FriendshipController extends Controller
 
         $user = User::find($request->from_user);
 
-        $friendship = Friendship::where(['from_user' => $request->from_user, 'to_user' => $request->to_user])->first();
-
-        $user->friendships()->delete($friendship);
-
-        $friendship->delete();
+        $user->friendships()->where('from_user', $request->from_user)->where('to_user', $request->to_user)->delete();
 
         return ['message' => 'Successfully unfollowed'];
     }
@@ -63,10 +59,10 @@ class FriendshipController extends Controller
      */
     public function fetchUserFollowing(Request $req) {
         $req->validate([
-            'user_id' => 'required|integer'
+            'userId' => 'required|integer'
         ]);
 
-        $userFollowings = User::find($req->user_id)->friendships;
+        $userFollowings = User::find($req->userId)->friendships;
 
         return FollowingInfo::collection($userFollowings);
     }
@@ -76,10 +72,10 @@ class FriendshipController extends Controller
      */
     public function fetchUserFollowers(Request $req) {
         $req->validate([
-            'user_id' => 'required|integer'
+            'userId' => 'required|integer'
         ]);
 
-        $userFollowers = Friendship::where('to_user', $req->user_id)->get();
+        $userFollowers = Friendship::where('to_user', $req->userId)->get();
 
         return FollowersInfo::collection($userFollowers); 
     }

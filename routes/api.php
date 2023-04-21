@@ -44,13 +44,13 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
     Route::post('follow', [FriendshipController::class, 'followUser']);
 
      //follow a user
-     Route::get('unfollow', [FriendshipController::class, 'unfollowUser']);
+     Route::post('unfollow', [FriendshipController::class, 'unfollowUser']);
 
     //fetch user followings
-    Route::get('/following',[FriendshipController::class, 'fetchUserFollowing']);
+    Route::post('/followings',[FriendshipController::class, 'fetchUserFollowing']);
 
     //fetch user followers
-    Route::get('/followers',[FriendshipController::class, 'fetchUserFollowers']);
+    Route::post('/followers',[FriendshipController::class, 'fetchUserFollowers']);
     
     //create post
     Route::post('post',[PostController::class,'create']); 

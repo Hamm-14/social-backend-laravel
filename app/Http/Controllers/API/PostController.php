@@ -38,7 +38,7 @@ class PostController extends Controller
      */
     public function allPosts(Request $request)
     {
-        $posts = Post::all();
+        $posts = Post::all()->sortByDesc('created_at');
 
         return PostResource::collection($posts);
     } 
